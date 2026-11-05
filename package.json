@@ -1,0 +1,28 @@
+{
+  "name": "@hugovela/cms-host-netlify-github",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "exports": {
+    "./server": "./src/server/index.js",
+    "./client": "./src/client/index.js"
+  },
+  "files": [
+    "src/",
+    "examples/neutral-site/",
+    "README.md",
+    "HOST-SETUP.md"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "verify": "npm test && node tests/boundary-check.js && node tests/packed-consumer.mjs"
+  },
+  "dependencies": {
+    "fflate": "^0.8.3",
+    "pdfjs-dist": "^6.4.299",
+    "yaml": "^2.9.0"
+  }
+}
