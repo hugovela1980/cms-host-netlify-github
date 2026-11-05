@@ -1,10 +1,11 @@
 # Standalone CMS host setup
 
-This is a package-only integration guide for a new site. The workspace package is
-private at `0.0.0`; it is not published, installed in RightTrack, or ready for a
-production deployment. The offline packed-consumer test proves installation from
-a local tarball with its runtime dependencies supplied locally. A consuming site
-must make its own package distribution and deployment decisions.
+This is an integration guide for a new site. The package is private at `0.1.0`
+and installed from GitHub by an exact commit SHA, as described in the README.
+It is not published to the npm registry or installed in RightTrack. The offline
+packed-consumer test proves installation from a local tarball with its runtime
+dependencies supplied locally. A consuming site must make its own deployment
+decision and verify its pinned commit before production use.
 
 ## Runtime and storage
 

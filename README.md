@@ -1,4 +1,23 @@
-# Netlify/GitHub CMS host adapter (local checkpoint)
+# Netlify/GitHub CMS host adapter
+
+A private standalone package for CMS state, publication, assets, revisions, and
+optional legal documents. Like `@hugovela/cms-editor`, it uses a package version
+for identification and an exact Git commit to select code in each consuming site.
+It is not published to the npm registry.
+
+## Install from GitHub
+
+In a separate site with access to this private repository, replace the placeholder
+with the full commit SHA that has passed verification:
+
+```bash
+npm install "github:hugovela1980/cms-host-netlify-github#<full-commit-sha>"
+```
+
+Commit the consuming site's `package.json` and lockfile together. Updating the
+adapter is an explicit change to that pinned SHA, followed by the site's own
+verification. The `private` manifest flag prevents accidental npm registry
+publication; it does not prevent GitHub installation.
 
 For a new site's storage, routes, authorization, browser wiring, and uncertain
 publication procedure, see [HOST-SETUP.md](./HOST-SETUP.md).
@@ -51,7 +70,7 @@ staging retain their existing `images/staged/` and `legal/staged/` prefixes in
 that same store. The factory does not import `@netlify/blobs`; the host injects
 its transport and credentials. Named storage and the older `store` plus `keys`
 configuration are mutually exclusive. The older form remains available only
-for compatibility with this private `0.0.0` package; new hosts should use
+for compatibility with early private package builds; new hosts should use
 `storage` so record keys cannot drift between sites.
 
 See the package-owned `examples/neutral-site/composed-host.mjs` for a host-owned authorization
@@ -61,12 +80,12 @@ Publish, exact READY confirmation, history, and Restore through package exports.
 For an isolated consumer, pack the package and install it with its three runtime
 dependencies (`fflate`, `pdfjs-dist`, `yaml`) available locally. A tarball import
 check without dependency installation is not an offline install proof. This
-workspace package remains private at version `0.0.0` and is not yet a release.
+package remains private at version `0.1.0`; consumers should pin an exact commit.
 
-`npm run verify -w @hugovela/cms-host-netlify-github` now includes an isolated
+`npm run verify` includes an isolated
 offline consumer check. It packs this package and the three installed runtime
 dependencies into tarballs, creates a fresh temporary project outside the
-workspace with an empty npm cache, and installs those tarballs using
+project with an empty npm cache, and installs those tarballs using
 `npm install --offline --omit=optional --ignore-scripts`. The consumer imports
 both public subpaths through the neutral host/editor examples and exercises the
 synthetic no-legal and legal Save → Publish → exact READY → history → Restore
@@ -74,7 +93,7 @@ flows. The runner deletes its temporary project afterward. It requires the
 three dependencies already installed locally; it does not fetch from a registry
 or prove that the package can be installed without supplying those dependencies.
 
-This private workspace package is not installed or activated in RightTrack. Its
+This private package is not installed or activated in RightTrack. Its
 public `./server` entry exports generic CMS HTTP and Netlify deployment helpers,
 GitHub transport and explicit publication configuration,
 publication-status helpers, `createCmsHostPolicyBundle`, and
@@ -373,7 +392,7 @@ failure prevents a successful result and leaves uncertain ownership untouched.
 An injected scheduler supports deterministic tests; ordinary use has a timer.
 `kind` defaults to `mutation`; abandoned-image GC uses `asset-cleanup`.
 
-Run `npm run verify -w @hugovela/cms-host-netlify-github` from the repository
+Run `npm run verify` from the repository
 root for focused tests and the package boundary check. No credentials or remote
 provider access are needed. The package exports core JSON, managed-image, and
 optional legal JSON and preview trusted handlers, plus the editor host runtime.
